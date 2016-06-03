@@ -1,0 +1,445 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		947E01994C4A602752DF4E12 /* Pods_GDPDFViewExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A250366781FD38B1070EE667 /* Pods_GDPDFViewExample.framework */; };
+		A50F7E681CF6F5EE008F3791 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F7E671CF6F5EE008F3791 /* main.m */; };
+		A50F7E6B1CF6F5EE008F3791 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F7E6A1CF6F5EE008F3791 /* AppDelegate.m */; };
+		A50F7E6E1CF6F5EE008F3791 /* GDInCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F7E6D1CF6F5EE008F3791 /* GDInCodeViewController.m */; };
+		A50F7E711CF6F5EE008F3791 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A50F7E6F1CF6F5EE008F3791 /* Main.storyboard */; };
+		A50F7E731CF6F5EE008F3791 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A50F7E721CF6F5EE008F3791 /* Assets.xcassets */; };
+		A50F7E761CF6F5EE008F3791 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A50F7E741CF6F5EE008F3791 /* LaunchScreen.storyboard */; };
+		A50F7E801CF6F62F008F3791 /* GDPDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F7E7F1CF6F62F008F3791 /* GDPDFView.m */; };
+		A50F7E831CF6F648008F3791 /* GDPDFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F7E821CF6F648008F3791 /* GDPDFScrollView.m */; };
+		A50F7E861CF6F662008F3791 /* GDPDFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F7E851CF6F662008F3791 /* GDPDFImageView.m */; };
+		A50F7E891CF6FA65008F3791 /* GDPDFContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F7E881CF6FA65008F3791 /* GDPDFContainerView.m */; };
+		A50F7E8B1CF6FB8C008F3791 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F7E8A1CF6FB8C008F3791 /* UIKit.framework */; };
+		A50F7E8D1CF6FB92008F3791 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F7E8C1CF6FB92008F3791 /* Foundation.framework */; };
+		A55705111D0066F7008FCBC6 /* GDInStoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A55705101D0066F7008FCBC6 /* GDInStoryboardViewController.m */; };
+		A5A5ED101CF74054006CACD1 /* MyCoreLocationLecture.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A5A5ED0F1CF74054006CACD1 /* MyCoreLocationLecture.pdf */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2CE8B72DC269F2088D9F41FF /* Pods-GDPDFViewExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDPDFViewExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GDPDFViewExample/Pods-GDPDFViewExample.debug.xcconfig"; sourceTree = "<group>"; };
+		A250366781FD38B1070EE667 /* Pods_GDPDFViewExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDPDFViewExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3CA31E4A10E0A0421CCA44F /* Pods-GDPDFViewExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDPDFViewExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-GDPDFViewExample/Pods-GDPDFViewExample.release.xcconfig"; sourceTree = "<group>"; };
+		A50F7E631CF6F5EE008F3791 /* GDPDFViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDPDFViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A50F7E671CF6F5EE008F3791 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A50F7E691CF6F5EE008F3791 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A50F7E6A1CF6F5EE008F3791 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A50F7E6C1CF6F5EE008F3791 /* GDInCodeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDInCodeViewController.h; sourceTree = "<group>"; };
+		A50F7E6D1CF6F5EE008F3791 /* GDInCodeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDInCodeViewController.m; sourceTree = "<group>"; };
+		A50F7E701CF6F5EE008F3791 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A50F7E721CF6F5EE008F3791 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A50F7E751CF6F5EE008F3791 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A50F7E771CF6F5EE008F3791 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A50F7E7E1CF6F62F008F3791 /* GDPDFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDPDFView.h; sourceTree = "<group>"; };
+		A50F7E7F1CF6F62F008F3791 /* GDPDFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDPDFView.m; sourceTree = "<group>"; };
+		A50F7E811CF6F648008F3791 /* GDPDFScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDPDFScrollView.h; sourceTree = "<group>"; };
+		A50F7E821CF6F648008F3791 /* GDPDFScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDPDFScrollView.m; sourceTree = "<group>"; };
+		A50F7E841CF6F662008F3791 /* GDPDFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDPDFImageView.h; sourceTree = "<group>"; };
+		A50F7E851CF6F662008F3791 /* GDPDFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDPDFImageView.m; sourceTree = "<group>"; };
+		A50F7E871CF6FA65008F3791 /* GDPDFContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDPDFContainerView.h; sourceTree = "<group>"; };
+		A50F7E881CF6FA65008F3791 /* GDPDFContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDPDFContainerView.m; sourceTree = "<group>"; };
+		A50F7E8A1CF6FB8C008F3791 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A50F7E8C1CF6FB92008F3791 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A5526B741CFEDAEF00477761 /* GDPDFViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDPDFViewDelegate.h; sourceTree = "<group>"; };
+		A55705071D00059B008FCBC6 /* GDPDFViewProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDPDFViewProperties.h; sourceTree = "<group>"; };
+		A55705091D001896008FCBC6 /* GDPDFContainerViewProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDPDFContainerViewProperties.h; sourceTree = "<group>"; };
+		A557050F1D0066F7008FCBC6 /* GDInStoryboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDInStoryboardViewController.h; sourceTree = "<group>"; };
+		A55705101D0066F7008FCBC6 /* GDInStoryboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDInStoryboardViewController.m; sourceTree = "<group>"; };
+		A5A5ED0F1CF74054006CACD1 /* MyCoreLocationLecture.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = MyCoreLocationLecture.pdf; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A50F7E601CF6F5EE008F3791 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A50F7E8D1CF6FB92008F3791 /* Foundation.framework in Frameworks */,
+				A50F7E8B1CF6FB8C008F3791 /* UIKit.framework in Frameworks */,
+				947E01994C4A602752DF4E12 /* Pods_GDPDFViewExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		59B9E2DFE9FE2DA3C2B986F3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2CE8B72DC269F2088D9F41FF /* Pods-GDPDFViewExample.debug.xcconfig */,
+				A3CA31E4A10E0A0421CCA44F /* Pods-GDPDFViewExample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9A4B9536833AE22510F64709 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A50F7E8C1CF6FB92008F3791 /* Foundation.framework */,
+				A50F7E8A1CF6FB8C008F3791 /* UIKit.framework */,
+				A250366781FD38B1070EE667 /* Pods_GDPDFViewExample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A50F7E5A1CF6F5EE008F3791 = {
+			isa = PBXGroup;
+			children = (
+				A50F7E7D1CF6F623008F3791 /* GDPDFView */,
+				A50F7E651CF6F5EE008F3791 /* GDPDFViewExample */,
+				A50F7E641CF6F5EE008F3791 /* Products */,
+				59B9E2DFE9FE2DA3C2B986F3 /* Pods */,
+				9A4B9536833AE22510F64709 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A50F7E641CF6F5EE008F3791 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A50F7E631CF6F5EE008F3791 /* GDPDFViewExample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A50F7E651CF6F5EE008F3791 /* GDPDFViewExample */ = {
+			isa = PBXGroup;
+			children = (
+				A50F7E691CF6F5EE008F3791 /* AppDelegate.h */,
+				A50F7E6A1CF6F5EE008F3791 /* AppDelegate.m */,
+				A50F7E6C1CF6F5EE008F3791 /* GDInCodeViewController.h */,
+				A50F7E6D1CF6F5EE008F3791 /* GDInCodeViewController.m */,
+				A557050F1D0066F7008FCBC6 /* GDInStoryboardViewController.h */,
+				A55705101D0066F7008FCBC6 /* GDInStoryboardViewController.m */,
+				A50F7E6F1CF6F5EE008F3791 /* Main.storyboard */,
+				A50F7E721CF6F5EE008F3791 /* Assets.xcassets */,
+				A50F7E741CF6F5EE008F3791 /* LaunchScreen.storyboard */,
+				A50F7E771CF6F5EE008F3791 /* Info.plist */,
+				A50F7E661CF6F5EE008F3791 /* Supporting Files */,
+			);
+			path = GDPDFViewExample;
+			sourceTree = "<group>";
+		};
+		A50F7E661CF6F5EE008F3791 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A5A5ED0F1CF74054006CACD1 /* MyCoreLocationLecture.pdf */,
+				A50F7E671CF6F5EE008F3791 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A50F7E7D1CF6F623008F3791 /* GDPDFView */ = {
+			isa = PBXGroup;
+			children = (
+				A50F7E7E1CF6F62F008F3791 /* GDPDFView.h */,
+				A50F7E7F1CF6F62F008F3791 /* GDPDFView.m */,
+				A50F7E811CF6F648008F3791 /* GDPDFScrollView.h */,
+				A50F7E821CF6F648008F3791 /* GDPDFScrollView.m */,
+				A50F7E871CF6FA65008F3791 /* GDPDFContainerView.h */,
+				A50F7E881CF6FA65008F3791 /* GDPDFContainerView.m */,
+				A50F7E841CF6F662008F3791 /* GDPDFImageView.h */,
+				A50F7E851CF6F662008F3791 /* GDPDFImageView.m */,
+				A5526B741CFEDAEF00477761 /* GDPDFViewDelegate.h */,
+				A55705071D00059B008FCBC6 /* GDPDFViewProperties.h */,
+				A55705091D001896008FCBC6 /* GDPDFContainerViewProperties.h */,
+			);
+			path = GDPDFView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A50F7E621CF6F5EE008F3791 /* GDPDFViewExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A50F7E7A1CF6F5EE008F3791 /* Build configuration list for PBXNativeTarget "GDPDFViewExample" */;
+			buildPhases = (
+				1B9D735FDCEC5D40AC84D47F /* 📦 Check Pods Manifest.lock */,
+				A50F7E5F1CF6F5EE008F3791 /* Sources */,
+				A50F7E601CF6F5EE008F3791 /* Frameworks */,
+				A50F7E611CF6F5EE008F3791 /* Resources */,
+				262F763854EC2ED3702C12B1 /* 📦 Embed Pods Frameworks */,
+				98C61EE67F2B609E031C9590 /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GDPDFViewExample;
+			productName = GDPDFViewExample;
+			productReference = A50F7E631CF6F5EE008F3791 /* GDPDFViewExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A50F7E5B1CF6F5EE008F3791 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Gavrilov Daniil";
+				TargetAttributes = {
+					A50F7E621CF6F5EE008F3791 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = A50F7E5E1CF6F5EE008F3791 /* Build configuration list for PBXProject "GDPDFViewExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A50F7E5A1CF6F5EE008F3791;
+			productRefGroup = A50F7E641CF6F5EE008F3791 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A50F7E621CF6F5EE008F3791 /* GDPDFViewExample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A50F7E611CF6F5EE008F3791 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A50F7E761CF6F5EE008F3791 /* LaunchScreen.storyboard in Resources */,
+				A50F7E731CF6F5EE008F3791 /* Assets.xcassets in Resources */,
+				A50F7E711CF6F5EE008F3791 /* Main.storyboard in Resources */,
+				A5A5ED101CF74054006CACD1 /* MyCoreLocationLecture.pdf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1B9D735FDCEC5D40AC84D47F /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		262F763854EC2ED3702C12B1 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GDPDFViewExample/Pods-GDPDFViewExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98C61EE67F2B609E031C9590 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GDPDFViewExample/Pods-GDPDFViewExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A50F7E5F1CF6F5EE008F3791 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A50F7E6E1CF6F5EE008F3791 /* GDInCodeViewController.m in Sources */,
+				A50F7E6B1CF6F5EE008F3791 /* AppDelegate.m in Sources */,
+				A50F7E891CF6FA65008F3791 /* GDPDFContainerView.m in Sources */,
+				A55705111D0066F7008FCBC6 /* GDInStoryboardViewController.m in Sources */,
+				A50F7E861CF6F662008F3791 /* GDPDFImageView.m in Sources */,
+				A50F7E831CF6F648008F3791 /* GDPDFScrollView.m in Sources */,
+				A50F7E801CF6F62F008F3791 /* GDPDFView.m in Sources */,
+				A50F7E681CF6F5EE008F3791 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A50F7E6F1CF6F5EE008F3791 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A50F7E701CF6F5EE008F3791 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A50F7E741CF6F5EE008F3791 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A50F7E751CF6F5EE008F3791 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A50F7E781CF6F5EE008F3791 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A50F7E791CF6F5EE008F3791 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A50F7E7B1CF6F5EE008F3791 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CE8B72DC269F2088D9F41FF /* Pods-GDPDFViewExample.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = GDPDFViewExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = GD.GDPDFViewExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A50F7E7C1CF6F5EE008F3791 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3CA31E4A10E0A0421CCA44F /* Pods-GDPDFViewExample.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = GDPDFViewExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = GD.GDPDFViewExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A50F7E5E1CF6F5EE008F3791 /* Build configuration list for PBXProject "GDPDFViewExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A50F7E781CF6F5EE008F3791 /* Debug */,
+				A50F7E791CF6F5EE008F3791 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A50F7E7A1CF6F5EE008F3791 /* Build configuration list for PBXNativeTarget "GDPDFViewExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A50F7E7B1CF6F5EE008F3791 /* Debug */,
+				A50F7E7C1CF6F5EE008F3791 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A50F7E5B1CF6F5EE008F3791 /* Project object */;
+}
