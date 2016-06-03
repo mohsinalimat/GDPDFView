@@ -1,6 +1,8 @@
 #GDPDFView
 Vertical scroll view to display PDF file based on using OHPDFImage https://github.com/AliSoftware/OHPDFImage.
 
+![Alt text](GDPDFView.gif?raw=true "Example gif")
+
 ## Installation
 Simply add GDPDFVIew folder with files to your project, or use CocoaPods.
 
