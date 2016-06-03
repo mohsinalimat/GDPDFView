@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.source_files = "GDPDFView/*"
   s.frameworks = "UIKit", "Foundation"
   s.requires_arc = true
-  s.dependency = "OHPDFImage"
+  s.dependency "OHPDFImage"
 end
