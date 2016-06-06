@@ -26,6 +26,8 @@
 @interface GDPDFView () <UIScrollViewDelegate, GDPDFViewDelegate>
 
 @property (nonatomic, strong) GDPDFScrollView *scrollView;
+@property (nonatomic) CGFloat lastContentOffset;
+@property (nonatomic) CGFloat lastZoomScale;
 
 @end
 
@@ -100,12 +102,20 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.scrollView renderContent];
+    if (self.lastContentOffset != scrollView.contentOffset.y) {
+        [self.scrollView renderContent];
+    }
+    
+    self.lastContentOffset = scrollView.contentOffset.y;
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    [self.scrollView centerContent];
-    [self.scrollView renderContent];
+    if (self.lastZoomScale != scrollView.zoomScale) {
+        [self.scrollView centerContent];
+        [self.scrollView renderContent];
+    }
+    
+    self.lastZoomScale = scrollView.zoomScale;
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
@@ -115,6 +125,7 @@
 #pragma mark - PDFViewDelegate
 
 - (void)PDFViewDidBeginLoading:(id<GDPDFViewProperties,GDPDFContainerViewProperties>)view {
+    NSLog(@"PDFViewDidBeginLoading");
     if (self.PDFViewDelegate && [self.PDFViewDelegate respondsToSelector:@selector(PDFViewDidBeginLoading:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.PDFViewDelegate PDFViewDidBeginLoading:self];
@@ -123,6 +134,7 @@
 }
 
 - (void)PDFViewDidEndLoading:(id<GDPDFViewProperties,GDPDFContainerViewProperties>)view {
+    NSLog(@"PDFViewDidEndLoading");
     if (self.PDFViewDelegate && [self.PDFViewDelegate respondsToSelector:@selector(PDFViewDidEndLoading:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.PDFViewDelegate PDFViewDidEndLoading:self];

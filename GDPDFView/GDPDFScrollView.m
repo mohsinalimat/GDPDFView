@@ -118,6 +118,10 @@
 }
 
 - (void)renderContent {
+    if (!self.filePathURL || CGRectGetWidth(self.bounds) == 0.0f || CGRectGetHeight(self.bounds) == 0.0f) {
+        return;
+    }
+    
     CGRect visibleRect = [self convertRect:self.bounds toView:self.containerView];
     visibleRect.origin.x = 0.0f;
     visibleRect.size.width = self.containerView.width;
@@ -146,12 +150,16 @@
 - (void)setupContainerViewWithFilePathURL:(NSURL *)filePathURL {
     [self cancelDocumentOperation];
     [self cancelPagesOperation];
+    [self viewDidBeginLoading];
     
+    __weak GDPDFScrollView *wSelf = self;
     [self imageViewsWithFilePathURL:filePathURL completion:^(NSArray *imageViews) {
-        self.containerView = [[GDPDFContainerView alloc] initWithImageViews:imageViews];
-        [self addSubview:self.containerView];
+        __strong GDPDFScrollView *sSelf = wSelf;
+        sSelf.containerView = [[GDPDFContainerView alloc] initWithImageViews:imageViews];
+        [sSelf addSubview:sSelf.containerView];
         
-        [self layoutContainerView];
+        [sSelf layoutContainerView];
+        [sSelf viewDidEndLoading];
     }];
 }
 
@@ -192,8 +200,6 @@
     self.documentOperation = [NSBlockOperation blockOperationWithBlock:^{
         __strong GDPDFScrollView *sSelf = wSelf;
         
-        [sSelf viewDidBeginLoading];
-        
         OHPDFDocument *document = [sSelf documentWithFilePathURL:filePathURL];
         NSArray *documentPages = [sSelf documentPagesWithDocument:document];
         
@@ -215,18 +221,19 @@
                 completion(imageViews);
             });
         }
-        
-        [sSelf viewDidEndLoading];
     }];
     
     [self.documentOperation start];
 }
 
 - (void)changeDocumentWithFilePath:(NSURL *)filePathURL {
+    [self viewDidBeginLoading];
+    
     __weak GDPDFScrollView *wSelf = self;
     [self imageViewsWithFilePathURL:filePathURL completion:^(NSArray *imageViews) {
         __strong GDPDFScrollView *sSelf = wSelf;
         [sSelf setNewContentForContainerViewWithImageViews:imageViews];
+        [sSelf viewDidEndLoading];
     }];
 }
 
@@ -357,14 +364,14 @@
 }
 
 - (void)setFilePathURL:(NSURL *)filePathURL {
-    if (!self.containerView) {
-        return;
-    }
-    
     if ([self fileExistsAtPath:[filePathURL path]]) {
         _filePathURL = filePathURL;
     } else {
         _filePathURL = nil;
+    }
+    
+    if (!self.containerView) {
+        return;
     }
     
     [self changeDocumentWithFilePath:filePathURL];

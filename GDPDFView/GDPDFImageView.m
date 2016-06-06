@@ -35,7 +35,6 @@
 
 @property (nonatomic) BOOL thumbnailIsRendered;
 @property (nonatomic) BOOL pageIsRendered;
-@property (nonatomic) BOOL showActivityIndicator;
 @property (nonatomic) BOOL showThumbnail;
 @property (nonatomic) CGSize imageSize;
 @property (nonatomic) CGSize thumbnailSize;
@@ -98,8 +97,6 @@
 }
 
 - (void)showActivityIndicator:(BOOL)showActivityIndicator {
-    self.showActivityIndicator = showActivityIndicator;
-    
     if (showActivityIndicator) {
         [self addActivityIndicator];
     } else {
@@ -127,10 +124,6 @@
     }
     
     self.thumbnailSize = thumbnailSize;
-    
-    if (self.showThumbnail) {
-        [self addThumbnailImage];
-    }
 }
 
 #pragma mark -
