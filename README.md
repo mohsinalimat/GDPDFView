@@ -12,7 +12,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'project_name' do
-	pod 'GDPDFView', '~> 1.0.2'
+	pod 'GDPDFView', '~> 1.0.3'
 end
 ```
 

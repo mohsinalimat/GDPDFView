@@ -125,7 +125,6 @@
 #pragma mark - PDFViewDelegate
 
 - (void)PDFViewDidBeginLoading:(id<GDPDFViewProperties,GDPDFContainerViewProperties>)view {
-    NSLog(@"PDFViewDidBeginLoading");
     if (self.PDFViewDelegate && [self.PDFViewDelegate respondsToSelector:@selector(PDFViewDidBeginLoading:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.PDFViewDelegate PDFViewDidBeginLoading:self];
@@ -134,7 +133,6 @@
 }
 
 - (void)PDFViewDidEndLoading:(id<GDPDFViewProperties,GDPDFContainerViewProperties>)view {
-    NSLog(@"PDFViewDidEndLoading");
     if (self.PDFViewDelegate && [self.PDFViewDelegate respondsToSelector:@selector(PDFViewDidEndLoading:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.PDFViewDelegate PDFViewDidEndLoading:self];
