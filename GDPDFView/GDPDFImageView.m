@@ -30,11 +30,11 @@
 
 @property (nonatomic, strong) OHVectorImage *vectorImage;
 @property (nonatomic, strong) NSOperation *imageOperation;
-@property (nonatomic, strong) NSOperation *thumbnailOperation;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, strong) UIImage *thumbnail;
 
+@property (nonatomic) BOOL thumbnailIsRendered;
+@property (nonatomic) BOOL pageIsRendered;
 @property (nonatomic) BOOL showActivityIndicator;
 @property (nonatomic) BOOL showThumbnail;
 @property (nonatomic) CGSize imageSize;
@@ -51,8 +51,10 @@
     self = [super init];
     if (self) {
         self.vectorImage = vectorImage;
-        self.showActivityIndicator = YES;
-        self.showThumbnail = YES;
+        self.thumbnailIsRendered = NO;
+        self.pageIsRendered = NO;
+        [self showActivityIndicator:YES];
+        [self setShowThumbnail:YES];
         self.imageSize = CGSizeZero;
         self.thumbnailSize = CGSizeZero;
         self.backgroundColor = [UIColor clearColor];
@@ -68,8 +70,14 @@
 #pragma mark - Public Methods
 
 - (void)drawInOperationQueue:(NSOperationQueue *)operationQueue {
-    if (self.image && ![self.image isEqual:self.thumbnail]) {
+    if (self.pageIsRendered) {
         return;
+    }
+    
+    if (self.showThumbnail && !self.thumbnailIsRendered) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self addThumbnailImage];
+        });
     }
     
     [self stopImageOperation];
@@ -84,7 +92,9 @@
 - (void)clean {
     [self stopImageOperation];
     [self.activityIndicator startAnimating];
-    [self setImage:self.thumbnail];
+    self.thumbnailIsRendered = NO;
+    self.pageIsRendered = NO;
+    [self setImage:nil];
 }
 
 - (void)showActivityIndicator:(BOOL)showActivityIndicator {
@@ -97,14 +107,8 @@
     }
 }
 
-- (void)showThumbnail:(BOOL)showThumbnail inOperationQueue:(NSOperationQueue *)operationQueue {
+- (void)showThumbnail:(BOOL)showThumbnail {
     self.showThumbnail = showThumbnail;
-    
-    if (showThumbnail) {
-        [self addThumbnailImageInOperationQueue:operationQueue];
-    } else {
-        [self removeThumbnailImage];
-    }
 }
 
 - (void)changeImageSize:(CGSize)imageSize {
@@ -117,7 +121,7 @@
     [self setupImageViewSize];
 }
 
-- (void)changeThumbnailSize:(CGSize)thumbnailSize inOperationQueue:(NSOperationQueue *)operationQueue {
+- (void)changeThumbnailSize:(CGSize)thumbnailSize {
     if (CGSizeEqualToSize(thumbnailSize, CGSizeZero) || CGSizeEqualToSize(thumbnailSize, self.thumbnailSize)) {
         return;
     }
@@ -125,7 +129,7 @@
     self.thumbnailSize = thumbnailSize;
     
     if (self.showThumbnail) {
-        [self addThumbnailImageInOperationQueue:operationQueue];
+        [self addThumbnailImage];
     }
 }
 
@@ -174,33 +178,21 @@
 
 #pragma mark - Thumbnail Image
 
-- (void)addThumbnailImageInOperationQueue:(NSOperationQueue *)operationQueue {
-    [self stopThumbnailOperation];
+- (void)addThumbnailImage {
+    UIImage *thumbnailImage = [self.vectorImage renderAtSizeThatFits:self.thumbnailSize];
+    if (!self.pageIsRendered) {
+        [self setImage:thumbnailImage];
+    }
     
-    __weak GDPDFImageView *wSelf = self;
-    self.thumbnailOperation = [NSBlockOperation blockOperationWithBlock:^{
-        __strong GDPDFImageView *sSelf = wSelf;
-        
-        UIImage *thumbnailImage = [sSelf.vectorImage renderAtSizeThatFits:sSelf.thumbnailSize];
-        [sSelf applyNewThumbnailImage:thumbnailImage];
-    }];
-    
-    [operationQueue addOperation:self.thumbnailOperation];
-}
-
-- (void)applyNewThumbnailImage:(UIImage *)image {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (!self.image || (self.image && [self.image isEqual:self.thumbnail])) {
-            [self setImage:image];
-        }
-        [self setThumbnail:image];
-    });
+    self.thumbnailIsRendered = YES;
 }
 
 - (void)removeThumbnailImage {
-    [self stopThumbnailOperation];
+    if (!self.pageIsRendered) {
+        [self setImage:nil];
+    }
     
-    self.thumbnail = nil;
+    self.thumbnailIsRendered = NO;
 }
 
 #pragma mark - Support Methods
@@ -215,6 +207,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.activityIndicator stopAnimating];
         [self setImage:image];
+        self.pageIsRendered = YES;
     });
 }
 
@@ -223,14 +216,8 @@
     self.imageOperation = nil;
 }
 
-- (void)stopThumbnailOperation {
-    [self.thumbnailOperation cancel];
-    self.thumbnailOperation = nil;
-}
-
 - (void)stopOperations {
     [self stopImageOperation];
-    [self stopThumbnailOperation];
 }
 
 @end

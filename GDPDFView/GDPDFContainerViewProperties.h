@@ -32,12 +32,12 @@
 @property (nonatomic) CGFloat visibilityFactor;
 
 /**
- Enable or disable activity indicators
+ Enable or disable activity indicators, default is YES
  */
 @property (nonatomic) BOOL shouldShowActivityIndicator;
 
 /**
- Enable or disable thumbnails of pages
+ Enable or disable thumbnails of pages, default is YES
  */
 @property (nonatomic) BOOL shouldShowThumbnails;
 
@@ -47,7 +47,7 @@
 @property (nonatomic) CGSize maximumPageImageSize;
 
 /**
- Thumbnail size, will be applyed immediatly
+ Thumbnail size, will be applyed in next drawing cycle
  */
 @property (nonatomic) CGSize pageThumbnailSize;
 

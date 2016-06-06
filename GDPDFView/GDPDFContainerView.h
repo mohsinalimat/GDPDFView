@@ -30,11 +30,9 @@
 /**
  Instantiates and return GDPDFContainerView class instance
  @param imageViews Array of GDPDFImageView objects, may be nil
- @param imagesOperationQueue Operation queue to render pages images
- @param thumbnailsOperationQueue Operation queue to render pages thumbnails
  @return GDPDFContainerView class instance
  */
-- (instancetype)initWithImageViews:(NSArray<GDPDFImageView *> *)imageViews imagesOperationQueue:(NSOperationQueue *)imagesOperationQueue thumbnailsOperationQueue:(NSOperationQueue *)thumbnailsOperationQueue;
+- (instancetype)initWithImageViews:(NSArray<GDPDFImageView *> *)imageViews;
 
 /**
  Clean or render content of pages based on their visibility, 

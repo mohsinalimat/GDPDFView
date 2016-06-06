@@ -37,8 +37,8 @@
 @property (nonatomic, readwrite) NSInteger totalPagesCount;
 @property (nonatomic) CGRect lastBounds;
 
-@property (nonatomic, strong) NSOperationQueue *documentOperationQueue;
-@property (nonatomic, strong) NSOperationQueue *pagesOperationQueue;
+@property (nonatomic, strong) NSOperation *documentOperation;
+@property (nonatomic, strong) NSOperation *pagesOperation;
 
 @end
 
@@ -62,8 +62,6 @@
         self.currentPageNumber = 0;
         self.totalPagesCount = 0;
         self.lastBounds = CGRectZero;
-        self.documentOperationQueue = [self newOperationQueue];
-        self.pagesOperationQueue = [self newOperationQueue];
         self.bounces = NO;
         
         [self setupContainerViewWithFilePathURL:filePathURL];
@@ -79,8 +77,6 @@
         self.currentPageNumber = 0;
         self.totalPagesCount = 0;
         self.lastBounds = CGRectZero;
-        self.documentOperationQueue = [self newOperationQueue];
-        self.pagesOperationQueue = [self newOperationQueue];
         self.bounces = NO;
         
         [self setupContainerViewWithFilePathURL:filePathURL];
@@ -95,11 +91,8 @@
 }
 
 - (void)dealloc {
-    [self.pagesOperationQueue cancelAllOperations];
-    self.pagesOperationQueue = nil;
-    
-    [self.documentOperationQueue cancelAllOperations];
-    self.documentOperationQueue = nil;
+    [self cancelDocumentOperation];
+    [self cancelPagesOperation];
 }
 
 #pragma mark -
@@ -129,16 +122,16 @@
     visibleRect.origin.x = 0.0f;
     visibleRect.size.width = self.containerView.width;
     
-    [self.pagesOperationQueue cancelAllOperations];
+    [self cancelPagesOperation];
     
     __weak GDPDFScrollView *wSelf = self;
-    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+    self.pagesOperation = [NSBlockOperation blockOperationWithBlock:^{
         __strong GDPDFScrollView *sSelf = wSelf;
         NSInteger newCurrentPageNumber = [self.containerView renderPagesInRect:visibleRect withCurrentPage:self.currentPageNumber];
         [sSelf setCurrentPageNumber:newCurrentPageNumber];
     }];
     
-    [self.pagesOperationQueue addOperation:operation];
+    [self.pagesOperation start];
 }
 
 - (void)clean {
@@ -151,14 +144,11 @@
 #pragma mark - Default Setups
 
 - (void)setupContainerViewWithFilePathURL:(NSURL *)filePathURL {
-    [self.pagesOperationQueue cancelAllOperations];
-    [self.documentOperationQueue cancelAllOperations];
+    [self cancelDocumentOperation];
+    [self cancelPagesOperation];
     
     [self imageViewsWithFilePathURL:filePathURL completion:^(NSArray *imageViews) {
-        NSOperationQueue *imagesOperationQueue = [self newOperationQueue];
-        NSOperationQueue *thumbnailsOperationQueue = [self newOperationQueue];
-        
-        self.containerView = [[GDPDFContainerView alloc] initWithImageViews:imageViews imagesOperationQueue:imagesOperationQueue thumbnailsOperationQueue:thumbnailsOperationQueue];
+        self.containerView = [[GDPDFContainerView alloc] initWithImageViews:imageViews];
         [self addSubview:self.containerView];
         
         [self layoutContainerView];
@@ -188,8 +178,8 @@
 }
 
 - (void)imageViewsWithFilePathURL:(NSURL *)filePathURL completion:(void (^)(NSArray *imageViews))completion {
-    [self.pagesOperationQueue cancelAllOperations];
-    [self.documentOperationQueue cancelAllOperations];
+    [self cancelDocumentOperation];
+    [self cancelPagesOperation];
     
     if (!filePathURL) {
         if (completion) {
@@ -199,7 +189,7 @@
     }
     
     __weak GDPDFScrollView *wSelf = self;
-    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+    self.documentOperation = [NSBlockOperation blockOperationWithBlock:^{
         __strong GDPDFScrollView *sSelf = wSelf;
         
         [sSelf viewDidBeginLoading];
@@ -229,7 +219,7 @@
         [sSelf viewDidEndLoading];
     }];
     
-    [self.documentOperationQueue addOperation:operation];
+    [self.documentOperation start];
 }
 
 - (void)changeDocumentWithFilePath:(NSURL *)filePathURL {
@@ -268,7 +258,7 @@
     if (CGSizeEqualToSize([self.containerView maximumPageImageSize], CGSizeZero) || CGSizeEqualToSize([self.containerView pageThumbnailSize], CGSizeZero)) {
         CGFloat side = CGRectGetWidth(self.bounds);
         [self setMaximumPageImageSize:CGSizeMake(side, side)];
-        [self setPageThumbnailSize:CGSizeMake(side * 0.2f, side * 0.2f)];
+        [self setPageThumbnailSize:CGSizeMake(side * 0.05f, side * 0.05f)];
         [self zoomScaleToFill];
     }
     
@@ -329,12 +319,24 @@
     return YES;
 }
 
-- (NSOperationQueue *)newOperationQueue {
-    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-    [operationQueue setQualityOfService:NSQualityOfServiceBackground];
-    [operationQueue setMaxConcurrentOperationCount:1];
- 
-    return operationQueue;
+- (void)cancelDocumentOperation {
+    if (self.documentOperation) {
+        if (![self.documentOperation isCancelled]) {
+            [self.documentOperation cancel];
+        }
+        
+        self.documentOperation = nil;
+    }
+}
+
+- (void)cancelPagesOperation {
+    if (self.pagesOperation) {
+        if (![self.pagesOperation isCancelled]) {
+            [self.pagesOperation cancel];
+        }
+        
+        self.pagesOperation = nil;
+    }
 }
 
 #pragma mark -

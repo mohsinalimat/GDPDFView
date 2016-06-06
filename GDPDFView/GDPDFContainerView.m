@@ -27,7 +27,7 @@
 @interface GDPDFContainerView ()
 
 @property (nonatomic, strong) NSOperationQueue *imagesOperationQueue;
-@property (nonatomic, strong) NSOperationQueue *thumbnailsOperationQueue;
+@property (nonatomic, strong) NSMutableArray *visiblePages;
 
 @property (nonatomic, readwrite) CGFloat width;
 @property (nonatomic, readwrite) CGFloat height;
@@ -45,12 +45,12 @@
 #pragma mark -
 #pragma mark - Init Methods & Superclass Overriders
 
-- (instancetype)initWithImageViews:(NSArray *)imageViews imagesOperationQueue:(NSOperationQueue *)imagesOperationQueue thumbnailsOperationQueue:(NSOperationQueue *)thumbnailsOperationQueue {
+- (instancetype)initWithImageViews:(NSArray *)imageViews {
     self = [super init];
     if (self) {
         self.imageViews = imageViews;
-        self.imagesOperationQueue = imagesOperationQueue;
-        self.thumbnailsOperationQueue = thumbnailsOperationQueue;
+        self.imagesOperationQueue = [self newOperationQueue];
+        self.visiblePages = [NSMutableArray new];
         self.visibilityFactor = 0.90f;
         self.backgroundColor = [UIColor clearColor];
         
@@ -97,6 +97,7 @@
     
     NSInteger newCurrentPage = currentPage;
     NSMutableArray *fullyVisiblePages = [NSMutableArray new];
+    NSMutableArray *visiblePages = [NSMutableArray new];
     BOOL currentPageIsFullyVisible = NO;
     for (NSInteger i = 0; i < [self.imageViews count]; i++) {
         if (i == 0) {
@@ -108,13 +109,31 @@
                     [fullyVisiblePages addObject:@(currentPage)];
                     currentPageIsFullyVisible = YES;
                 }
+            } else {
+                [currentImageView clean];
             }
         } else {
             NSInteger nextPage = currentPage + i;
             NSInteger prevPage = currentPage - i;
             
-            BOOL shouldSkipNextPage = ![self renderNextPageAtIndex:nextPage inRect:roundedRect andMarkInFullyVisiblePagesIfNeeded:fullyVisiblePages];
-            BOOL shouldSkipPrevPage = ![self renderPreviousPageAtIndex:prevPage inRect:roundedRect andMarkInFullyVisiblePagesIfNeeded:fullyVisiblePages];
+            BOOL shouldSkipNextPage = ![self renderPageAtIndex:nextPage inRect:roundedRect andMarkInFullyVisiblePagesIfNeeded:fullyVisiblePages];
+            BOOL shouldSkipPrevPage = ![self renderPageAtIndex:prevPage inRect:roundedRect andMarkInFullyVisiblePagesIfNeeded:fullyVisiblePages];
+            
+            BOOL pageBeforeNextIsVisible = [self renderPageAtIndex:(nextPage - 1) inRect:roundedRect andMarkInFullyVisiblePagesIfNeeded:fullyVisiblePages];
+            BOOL pageAfterPreviousIsVisible = [self renderPageAtIndex:(prevPage + 1) inRect:roundedRect andMarkInFullyVisiblePagesIfNeeded:fullyVisiblePages];
+            
+            if (shouldSkipNextPage) {
+                [visiblePages addObject:[NSString stringWithFormat:@"%@", @(nextPage)]];
+            }
+            if (shouldSkipPrevPage) {
+                [visiblePages addObject:[NSString stringWithFormat:@"%@", @(prevPage)]];
+            }
+            if (pageBeforeNextIsVisible) {
+                [visiblePages addObject:[NSString stringWithFormat:@"%@", @(nextPage - 1)]];
+            }
+            if (pageAfterPreviousIsVisible) {
+                [visiblePages addObject:[NSString stringWithFormat:@"%@", @(prevPage + 1)]];
+            }
             
             if (currentPageIsFullyVisible && shouldSkipNextPage && shouldSkipPrevPage) {
                 break;
@@ -122,9 +141,21 @@
         }
     }
     
+    for (NSString *object in self.visiblePages) {
+        if (![visiblePages containsObject:object]) {
+            NSInteger pageIndex = [object integerValue];
+            if (pageIndex < [self.imageViews count]) {
+                GDPDFImageView *imageView = [self.imageViews objectAtIndex:pageIndex];
+                [imageView clean];
+            }
+        }
+    }
+    
     if ([fullyVisiblePages count] > 0) {
         newCurrentPage = [[fullyVisiblePages valueForKeyPath:@"@max.integerValue"] integerValue];
     }
+    
+    self.visiblePages = visiblePages;
     
     return newCurrentPage;
 }
@@ -141,54 +172,20 @@
 
 #pragma mark - Drawing Logic
 
-- (BOOL)renderNextPageAtIndex:(NSInteger)nextPage inRect:(CGRect)rect andMarkInFullyVisiblePagesIfNeeded:(NSMutableArray *)fullyVisiblePages {
+- (BOOL)renderPageAtIndex:(NSInteger)page inRect:(CGRect)rect andMarkInFullyVisiblePagesIfNeeded:(NSMutableArray *)fullyVisiblePages {
     BOOL pageIsRendered = NO;
     
-    if (nextPage < [self.imageViews count]) {
-        GDPDFImageView *nextImageView = [self.imageViews objectAtIndex:nextPage];
-        if ([self pageIsVisible:nextImageView inRect:rect]) {
+    if (page >= 0 && page < [self.imageViews count]) {
+        GDPDFImageView *pageImageView = [self.imageViews objectAtIndex:page];
+        if ([self pageIsVisible:pageImageView inRect:rect]) {
             pageIsRendered = YES;
-            [nextImageView drawInOperationQueue:self.imagesOperationQueue];
+            [pageImageView drawInOperationQueue:self.imagesOperationQueue];
             
-            if ([self pageIsFullyVisible:nextImageView inRect:rect]) {
-                [fullyVisiblePages addObject:@(nextPage)];
-            }
-        } else if (nextPage > 0) {
-            GDPDFImageView *imageViewBeforeThat = [self.imageViews objectAtIndex:(nextPage - 1)];
-            if ([self pageIsVisible:imageViewBeforeThat inRect:rect]) {
-                [nextImageView drawInOperationQueue:self.imagesOperationQueue];
-            } else {
-                [nextImageView clean];
+            if ([self pageIsFullyVisible:pageImageView inRect:rect]) {
+                [fullyVisiblePages addObject:@(page)];
             }
         } else {
-            [nextImageView clean];
-        }
-    }
-    
-    return pageIsRendered;
-}
-
-- (BOOL)renderPreviousPageAtIndex:(NSInteger)prevPage inRect:(CGRect)rect andMarkInFullyVisiblePagesIfNeeded:(NSMutableArray *)fullyVisiblePages {
-    BOOL pageIsRendered = NO;
-    
-    if (prevPage >= 0) {
-        GDPDFImageView *prevImageView = [self.imageViews objectAtIndex:prevPage];
-        if ([self pageIsVisible:prevImageView inRect:rect]) {
-            pageIsRendered = YES;
-            [prevImageView drawInOperationQueue:self.imagesOperationQueue];
-            
-            if ([self pageIsFullyVisible:prevImageView inRect:rect]) {
-                [fullyVisiblePages addObject:@(prevPage)];
-            }
-        } else if (prevPage < ([self.imageViews count] - 1)) {
-            GDPDFImageView *imageViewAfterThat = [self.imageViews objectAtIndex:(prevPage + 1)];
-            if ([self pageIsVisible:imageViewAfterThat inRect:rect]) {
-                [prevImageView drawInOperationQueue:self.imagesOperationQueue];
-            } else {
-                [prevImageView clean];
-            }
-        } else {
-            [prevImageView clean];
+            [pageImageView clean];
         }
     }
     
@@ -233,6 +230,7 @@
     for (GDPDFImageView *imageView in self.imageViews) {
         [imageView removeFromSuperview];
     }
+    self.visiblePages = [NSMutableArray new];
 }
 
 #pragma mark - Support Methods
@@ -284,8 +282,14 @@
 
 - (void)stopOperations {
     [self.imagesOperationQueue cancelAllOperations];
+}
+
+- (NSOperationQueue *)newOperationQueue {
+    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+    [operationQueue setQualityOfService:NSQualityOfServiceBackground];
+    [operationQueue setMaxConcurrentOperationCount:1];
     
-    [self.thumbnailsOperationQueue cancelAllOperations];
+    return operationQueue;
 }
 
 #pragma mark -
@@ -321,7 +325,7 @@
     _shouldShowThumbnails = shouldShowThumbnails;
     
     for (GDPDFImageView *imageView in self.imageViews) {
-        [imageView showThumbnail:shouldShowThumbnails inOperationQueue:self.thumbnailsOperationQueue];
+        [imageView showThumbnail:shouldShowThumbnails];
     }
 }
 
@@ -346,7 +350,7 @@
     CGSize pageThumbnailSizeForCurrentScreen = CGSizeMake(pageThumbnailSize.width * factor, pageThumbnailSize.height * factor);
     
     for (GDPDFImageView *imageView in self.imageViews) {
-        [imageView changeThumbnailSize:pageThumbnailSizeForCurrentScreen inOperationQueue:self.thumbnailsOperationQueue];
+        [imageView changeThumbnailSize:pageThumbnailSizeForCurrentScreen];
     }
 }
 

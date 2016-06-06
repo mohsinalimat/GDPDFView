@@ -53,10 +53,10 @@
 
 /**
  Draw or clean page thumbnail in specified operation queue
- @param showThumbnail If YES draw thumbnail and place it if needed, if NO clean thumbnail ivar
- @param operationQueue Operation queue to render page thumbnail
+ @param showThumbnail If YES draw thumbnail and place it if needed, 
+ if NO remove thumbnail
  */
-- (void)showThumbnail:(BOOL)showThumbnail inOperationQueue:(NSOperationQueue *)operationQueue;
+- (void)showThumbnail:(BOOL)showThumbnail;
 
 /**
  Set maximum image size, will be applyed in next drawing of page image
@@ -66,12 +66,11 @@
 - (void)changeImageSize:(CGSize)imageSize;
 
 /**
- Set thumbnail size, will be applyed immediatly
+ Set thumbnail size, will be applyed in next drawing of page image
  @param thumbnailSize Size of rendered page thumbnail, thumbnail
  will be rendered at size that fits thumbnailSize
- @param operationQueue Operation queue to render page thumbnail
  */
-- (void)changeThumbnailSize:(CGSize)thumbnailSize inOperationQueue:(NSOperationQueue *)operationQueue;
+- (void)changeThumbnailSize:(CGSize)thumbnailSize;
 
 
 /**
