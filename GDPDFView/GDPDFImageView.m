@@ -33,8 +33,9 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic) BOOL thumbnailIsRendered;
 @property (nonatomic) BOOL pageIsRendered;
+@property (nonatomic) BOOL thumbnailIsRendered;
+@property (nonatomic) BOOL imageIsRendered;
 @property (nonatomic) BOOL showThumbnail;
 @property (nonatomic) CGSize imageSize;
 @property (nonatomic) CGSize thumbnailSize;
@@ -50,8 +51,9 @@
     self = [super init];
     if (self) {
         self.vectorImage = vectorImage;
-        self.thumbnailIsRendered = NO;
         self.pageIsRendered = NO;
+        self.thumbnailIsRendered = NO;
+        self.imageIsRendered = NO;
         [self showActivityIndicator:YES];
         [self setShowThumbnail:YES];
         self.imageSize = CGSizeZero;
@@ -62,7 +64,7 @@
 }
 
 - (void)dealloc {
-    [self stopOperations];
+    [self stopImageOperation];
 }
 
 #pragma mark -
@@ -73,10 +75,10 @@
         return;
     }
     
+    self.pageIsRendered = YES;
+    
     if (self.showThumbnail && !self.thumbnailIsRendered) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self addThumbnailImage];
-        });
+        [self addThumbnailImage];
     }
     
     [self stopImageOperation];
@@ -91,6 +93,7 @@
 - (void)clean {
     [self stopImageOperation];
     [self.activityIndicator startAnimating];
+    self.imageIsRendered = NO;
     self.thumbnailIsRendered = NO;
     self.pageIsRendered = NO;
     [self setImage:nil];
@@ -172,16 +175,22 @@
 #pragma mark - Thumbnail Image
 
 - (void)addThumbnailImage {
-    UIImage *thumbnailImage = [self.vectorImage renderAtSizeThatFits:self.thumbnailSize];
-    if (!self.pageIsRendered) {
-        [self setImage:thumbnailImage];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        UIImage *thumbnailImage = [self.vectorImage renderAtSizeThatFits:self.thumbnailSize];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!self.imageIsRendered) {
+                [self setImage:thumbnailImage];
+            }
+            
+            self.thumbnailIsRendered = YES;
+        });
+    });
     
-    self.thumbnailIsRendered = YES;
 }
 
 - (void)removeThumbnailImage {
-    if (!self.pageIsRendered) {
+    if (!self.imageIsRendered) {
         [self setImage:nil];
     }
     
@@ -200,17 +209,13 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.activityIndicator stopAnimating];
         [self setImage:image];
-        self.pageIsRendered = YES;
+        self.imageIsRendered = YES;
     });
 }
 
 - (void)stopImageOperation {
     [self.imageOperation cancel];
     self.imageOperation = nil;
-}
-
-- (void)stopOperations {
-    [self stopImageOperation];
 }
 
 @end

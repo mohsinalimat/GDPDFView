@@ -131,7 +131,7 @@
     __weak GDPDFScrollView *wSelf = self;
     self.pagesOperation = [NSBlockOperation blockOperationWithBlock:^{
         __strong GDPDFScrollView *sSelf = wSelf;
-        NSInteger newCurrentPageNumber = [self.containerView renderPagesInRect:visibleRect withCurrentPage:self.currentPageNumber];
+        NSInteger newCurrentPageNumber = [[sSelf containerView] renderPagesInRect:visibleRect withCurrentPage:[sSelf currentPageNumber]];
         [sSelf setCurrentPageNumber:newCurrentPageNumber];
     }];
     
@@ -208,8 +208,8 @@
             NSInteger pageNumber = [documentPages indexOfObject:page];
             OHVectorImage *vectorImage = [OHVectorImage imageWithPDFPage:page];
             
-            if (sSelf.PDFViewDelegate && [sSelf.PDFViewDelegate respondsToSelector:@selector(PDFView:configurePageVectorImage:atPageNumber:)]) {
-                [sSelf.PDFViewDelegate PDFView:sSelf configurePageVectorImage:vectorImage atPageNumber:pageNumber];
+            if ([sSelf PDFViewDelegate] && [[sSelf PDFViewDelegate] respondsToSelector:@selector(PDFView:configurePageVectorImage:atPageNumber:)]) {
+                [[sSelf PDFViewDelegate] PDFView:sSelf configurePageVectorImage:vectorImage atPageNumber:pageNumber];
             }
             
             GDPDFImageView *imageView = [[GDPDFImageView alloc] initWithVectorImage:vectorImage];
@@ -327,23 +327,13 @@
 }
 
 - (void)cancelDocumentOperation {
-    if (self.documentOperation) {
-        if (![self.documentOperation isCancelled]) {
-            [self.documentOperation cancel];
-        }
-        
-        self.documentOperation = nil;
-    }
+    [self.documentOperation cancel];
+    self.documentOperation = nil;
 }
 
 - (void)cancelPagesOperation {
-    if (self.pagesOperation) {
-        if (![self.pagesOperation isCancelled]) {
-            [self.pagesOperation cancel];
-        }
-        
-        self.pagesOperation = nil;
-    }
+    [self.pagesOperation cancel];
+    self.pagesOperation = nil;
 }
 
 #pragma mark -

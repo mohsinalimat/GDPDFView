@@ -68,11 +68,7 @@
 
 - (void)dealloc {
     [self stopOperations];
-    
-    for (UIView *subview in self.subviews) {
-        [subview removeFromSuperview];
-    }
-    self.imageViews = nil;
+    self.imagesOperationQueue = nil;
 }
 
 #pragma mark -
